@@ -12,7 +12,5 @@ export class CreateUserDto {
     message: 'Password is required',
   })
   password: string;
-
-  @IsString()
   name: string;
 }
