@@ -4,6 +4,7 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Model } from 'mongoose';
 import { Company } from './schemas/company.schema';
 import { InjectModel } from '@nestjs/mongoose';
+import { IUser } from 'src/users/users.interface';
 
 @Injectable()
 export class CompaniesService {
@@ -11,8 +12,11 @@ export class CompaniesService {
     @InjectModel(Company.name) private companyModel: Model<Company>,
   ) {}
 
-  async create(createCompanyDto: CreateCompanyDto) {
-    const company = await this.companyModel.create(createCompanyDto);
+  async create(createCompanyDto: CreateCompanyDto, user: IUser) {
+    const company = await this.companyModel.create({
+      ...createCompanyDto,
+      createdBy: { _id: user._id, email: user.email },
+    });
     return company;
   }
 
