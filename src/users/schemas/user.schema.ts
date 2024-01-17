@@ -24,6 +24,12 @@ export class User {
   address: string;
 
   @Prop()
+  isDeleted: boolean;
+
+  @Prop()
+  deletedAt: Date;
+
+  @Prop()
   createdAt: Date;
 
   @Prop()

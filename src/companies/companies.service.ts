@@ -29,13 +29,20 @@ export class CompaniesService {
   }
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto, user: IUser) {
-    return this.companyModel.updateOne(
+    return await this.companyModel.updateOne(
       { _id: id },
       { ...updateCompanyDto, updatedBy: { _id: user._id, email: user.email } },
     );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: string, user: IUser) {
+    return await this.companyModel.updateOne(
+      { _id: id },
+      {
+        isDeleted: true,
+        deletedAt: new Date(),
+        deletedBy: { _id: user._id, email: user.email },
+      },
+    );
   }
 }

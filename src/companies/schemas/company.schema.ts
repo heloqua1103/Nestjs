@@ -33,6 +33,12 @@ export class Company {
   };
 
   @Prop()
+  isDeleted: boolean;
+
+  @Prop()
+  deletedAt: Date;
+
+  @Prop()
   createdAt: Date;
 
   @Prop()
