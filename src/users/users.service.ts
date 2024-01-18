@@ -90,6 +90,10 @@ export class UsersService {
     return this.userModel.findOne({ _id: id }).select('-password');
   }
 
+  findOneByRefreshToken(refreshToken: string) {
+    return this.userModel.findOne({ refreshToken: refreshToken }).select('-password');
+  }
+
   findOneByUsername(username: string) {
     return this.userModel.findOne({ email: username });
   }
