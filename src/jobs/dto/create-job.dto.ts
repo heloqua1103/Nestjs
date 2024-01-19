@@ -76,4 +76,14 @@ export class CreateJobDto {
   })
   @IsBoolean({message: 'isActive must be boolean'})
   isActive: Boolean;
+
+  @IsNotEmpty({
+    message: 'Logo is required',
+  })
+  logo: string;
+
+  @IsNotEmpty({
+    message: 'Location is required',
+  })
+  location: string;
 }
