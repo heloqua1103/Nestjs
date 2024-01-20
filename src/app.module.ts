@@ -10,6 +10,8 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { CompaniesModule } from './companies/companies.module';
 import { JobsModule } from './jobs/jobs.module';
 import { FilesModule } from './files/files.module';
+import { PermissionsModule } from './permissions/permissions.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { FilesModule } from './files/files.module';
     CompaniesModule,
     JobsModule,
     FilesModule,
+    PermissionsModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [
