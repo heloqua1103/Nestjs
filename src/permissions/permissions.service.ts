@@ -60,6 +60,7 @@ export class PermissionsService {
   }
 
   findOne(id: string) {
+    if (!mongoose.Types.ObjectId.isValid(id)) return 'Permission not found';
     return this.permissionModel.findById(id);
   }
 

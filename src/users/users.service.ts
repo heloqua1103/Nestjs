@@ -87,15 +87,22 @@ export class UsersService {
 
   findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) return 'not found user';
-    return this.userModel.findOne({ _id: id }).select('-password');
+    return this.userModel
+      .findOne({ _id: id })
+      .select('-password')
+      .populate({ path: 'role', select: { name: 1, _id: 1 } });
   }
 
   findOneByRefreshToken(refreshToken: string) {
-    return this.userModel.findOne({ refreshToken: refreshToken }).select('-password');
+    return this.userModel
+      .findOne({ refreshToken: refreshToken })
+      .select('-password');
   }
 
   findOneByUsername(username: string) {
-    return this.userModel.findOne({ email: username });
+    return this.userModel
+      .findOne({ email: username })
+      .populate({ path: 'role', select: { name: 1, _id: 1 } });
   }
 
   isValidPassword(password: string, hashPassword: string) {
@@ -112,8 +119,12 @@ export class UsersService {
       },
     );
   }
-  remove(id: string, user: IUser) {
-    if (!mongoose.Types.ObjectId.isValid(id)) return 'not found user';
+  async remove(id: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new BadRequestException('Not found user');
+    const foundUser = await this.userModel.findOne({ _id: id });
+    if (foundUser.email === 'admin@gmail.com')
+      throw new BadRequestException(`Can't delete admin`);
     return this.userModel.updateOne(
       { _id: id },
       {
