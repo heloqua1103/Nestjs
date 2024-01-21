@@ -132,7 +132,7 @@ export class UsersService {
     if (!mongoose.Types.ObjectId.isValid(id))
       throw new BadRequestException('Not found user');
     const foundUser = await this.userModel.findOne({ _id: id });
-    if (foundUser.email === 'admin@gmail.com')
+    if (foundUser && foundUser.email === 'admin@gmail.com')
       throw new BadRequestException(`Can't delete admin`);
     return this.userModel.updateOne(
       { _id: id },

@@ -78,7 +78,6 @@ export class JobsService {
       deletedAt: new Date(),
       isDeleted: true,
     });
-    console.log(mongoose.Types.ObjectId.isValid(id))
     return "Deleted"
   }
 }
