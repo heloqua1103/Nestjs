@@ -42,7 +42,7 @@ export const INIT_PERMISSIONS = [
         "_id": "648ab4d5f4328bd3153ee21b",
         "name": "Update Company",
         "apiPath": "/api/v1/companies/:id",
-        "method": "PATCH",
+        "method": "PUT",
         "module": "COMPANIES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
@@ -138,7 +138,7 @@ export const INIT_PERMISSIONS = [
         "_id": "648ab719fa16b294212e4042",
         "name": "Update User",
         "apiPath": "/api/v1/users/:id",
-        "method": "PATCH",
+        "method": "PUT",
         "module": "USERS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
@@ -218,7 +218,7 @@ export const INIT_PERMISSIONS = [
         "_id": "648ad4a6dafdb9754f40b850",
         "name": "Update a Job",
         "apiPath": "/api/v1/jobs/:id",
-        "method": "PATCH",
+        "method": "PUT",
         "module": "JOBS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
@@ -330,7 +330,7 @@ export const INIT_PERMISSIONS = [
         "_id": "648ad555dafdb9754f40b877",
         "name": "Update resume status",
         "apiPath": "/api/v1/resumes/:id",
-        "method": "PATCH",
+        "method": "PUT",
         "module": "RESUMES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
@@ -410,7 +410,7 @@ export const INIT_PERMISSIONS = [
         "_id": "648ad5d4dafdb9754f40b890",
         "name": "Update a permission",
         "apiPath": "/api/v1/permissions/:id",
-        "method": "PATCH",
+        "method": "PUT",
         "module": "PERMISSIONS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
@@ -490,7 +490,7 @@ export const INIT_PERMISSIONS = [
         "_id": "648ad640dafdb9754f40b8ab",
         "name": "Update Role",
         "apiPath": "/api/v1/roles/:id",
-        "method": "PATCH",
+        "method": "PUT",
         "module": "ROLES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",

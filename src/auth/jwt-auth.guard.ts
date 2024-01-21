@@ -34,14 +34,20 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     // check permissions
     const targetMethod = request.method;
-    const targetEndpoint = request.route?.path;
+    const targetEndpoint = request.route?.path as string;
 
     // get user permissions
     const permissions = user?.permissions;
-    const isExist = permissions?.find((permission) => {
-      targetMethod === permission.method &&
-        targetEndpoint === permission.apiPath;
+    let isExist = permissions.find((permission) => {
+      if (
+        targetMethod === permission.method &&
+        targetEndpoint === permission.apiPath
+      ) {
+        return true;
+      } else return false;
+        
     });
+    if (targetEndpoint.startsWith('/api/v1/auth')) isExist = true;
     if (!isExist)
       throw new ForbiddenException(
         'You do not have permission to access this resource',
