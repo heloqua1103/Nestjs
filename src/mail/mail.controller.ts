@@ -2,14 +2,14 @@ import { Controller, Get } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { Public, ResponseMessage } from 'src/decorator/customize';
 import { MailerService } from '@nestjs-modules/mailer';
-import { SubscribersService } from 'src/subscribers/subscribers.service';
-import { JobsService } from 'src/jobs/jobs.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Subcriber } from 'src/subscribers/schemas/subscriber.schema';
 import { Model } from 'mongoose';
 import { Job } from 'src/jobs/schemas/job.schema';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('mail')
 @Controller('mail')
 export class MailController {
   constructor(

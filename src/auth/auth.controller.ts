@@ -10,11 +10,13 @@ import {
 import { AuthService } from './auth.service';
 import { Public, ResponseMessage, User } from 'src/decorator/customize';
 import { LocalAuthGuard } from './local-auth.guard';
-import { RegisterUserDto } from 'src/users/dto/create-user.dto';
+import { RegisterUserDto, UserLoginDto } from 'src/users/dto/create-user.dto';
 import { Request, Response } from 'express';
 import { IUser } from 'src/users/users.interface';
 import { RolesService } from 'src/roles/roles.service';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -26,6 +28,7 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalAuthGuard)
   @ResponseMessage('Login success')
+  @ApiBody({ type: UserLoginDto })
   handleLogin(@Req() req, @Res({ passthrough: true }) response: Response) {
     return this.authService.login(req.user, response);
   }
@@ -40,7 +43,7 @@ export class AuthController {
   @Get('account')
   @ResponseMessage('Get account info')
   async getAccountInfo(@User() user: IUser) {
-    const temp = await this.roleService.findOne(user.role._id) as any;
+    const temp = (await this.roleService.findOne(user.role._id)) as any;
     user.permissions = temp.permissions;
     return { user };
   }
