@@ -10,7 +10,7 @@ async function bootstrap() {
   const relector = app.get(Reflector);
 
   app.useGlobalInterceptors(new TransformInterceptor(relector));
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   // Config CORS
   app.enableCors({
@@ -18,14 +18,14 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
-    credentials: true
+    credentials: true,
   });
 
   // Config versioning
   app.setGlobalPrefix('api');
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: ['1', '2']
+    defaultVersion: ['1', '2'],
   });
 
   app.use(cookieParser());
