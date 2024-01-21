@@ -8,5 +8,6 @@ import { Subcriber, SubcriberSchema } from './schemas/subscriber.schema';
   imports: [MongooseModule.forFeature([{ name: Subcriber.name, schema: SubcriberSchema }])],
   controllers: [SubscribersController],
   providers: [SubscribersService],
+  exports: [SubscribersService]
 })
 export class SubscribersModule {}
