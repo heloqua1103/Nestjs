@@ -7,11 +7,12 @@ import {
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { SubscribersService } from './subscribers.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
-import { User } from 'src/decorator/customize';
+import { SkipCheckPermission, User } from 'src/decorator/customize';
 import { IUser } from 'src/users/users.interface';
 
 @Controller('subscribers')
@@ -24,6 +25,14 @@ export class SubscribersController {
     @User() user: IUser,
   ) {
     return this.subscribersService.create(createSubscriberDto, user);
+  }
+
+  @Post('skills')
+  @SkipCheckPermission()
+  getUserSkills(
+    @User() user: IUser,
+  ) {
+    return this.subscribersService.getSkills(user);
   }
 
   @Get()
@@ -40,13 +49,13 @@ export class SubscribersController {
     return this.subscribersService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
+  @SkipCheckPermission()
   update(
-    @Param('id') id: string,
     @Body() updateSubscriberDto: UpdateSubscriberDto,
     @User() user: IUser,
   ) {
-    return this.subscribersService.update(id, updateSubscriberDto, user);
+    return this.subscribersService.update(updateSubscriberDto, user);
   }
 
   @Delete(':id')

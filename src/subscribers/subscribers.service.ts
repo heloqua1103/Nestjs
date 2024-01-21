@@ -67,20 +67,14 @@ export class SubscribersService {
     return await this.subcriberModel.findById(id);
   }
 
-  async update(
-    id: string,
-    updateSubscriberDto: UpdateSubscriberDto,
-    user: IUser,
-  ) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new BadRequestException('Invalid id');
-    }
+  async update(updateSubscriberDto: UpdateSubscriberDto, user: IUser) {
     const update = await this.subcriberModel.updateOne(
-      { _id: id },
+      { email: user.email },
       {
         ...updateSubscriberDto,
         updatedBy: { id: user._id, email: user.email },
       },
+      { upsert: true },
     );
 
     return update;
@@ -100,5 +94,10 @@ export class SubscribersService {
       },
     );
     return 'Deleted successfully';
+  }
+
+  async getSkills(user: IUser) {
+    const { email } = user;
+    return this.subcriberModel.findOne({ email }, { skills: 1 });
   }
 }
