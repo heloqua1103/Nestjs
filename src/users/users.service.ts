@@ -7,10 +7,15 @@ import mongoose, { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { IUser } from './users.interface';
 import aqp from 'api-query-params';
+import { Role } from 'src/roles/schemas/role.schema';
+import { USER_ROLE } from 'src/databases/sample';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Role.name) private roleModel: Model<Role>,
+  ) {}
 
   hashPassword(password: string) {
     const salt = bcrypt.genSaltSync(10);
@@ -48,10 +53,13 @@ export class UsersService {
       .equals(registerUserDto.email);
     if (isExist)
       throw new BadRequestException(`Email ${registerUserDto.email} is exist`);
+
+    const userRole = await this.roleModel.findOne({ name: USER_ROLE });
+
     const result = await this.userModel.create({
       ...registerUserDto,
       password: hashPassword,
-      role: 'USER',
+      role: userRole?.id,
     });
     return result;
   }
@@ -96,13 +104,14 @@ export class UsersService {
   findOneByRefreshToken(refreshToken: string) {
     return this.userModel
       .findOne({ refreshToken: refreshToken })
-      .select('-password');
+      .select('-password')
+      .populate({ path: 'role', select: { name: 1 } });
   }
 
   findOneByUsername(username: string) {
     return this.userModel
       .findOne({ email: username })
-      .populate({ path: 'role', select: { name: 1, _id: 1 } });
+      .populate({ path: 'role', select: { name: 1 } });
   }
 
   isValidPassword(password: string, hashPassword: string) {
