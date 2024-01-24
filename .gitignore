@@ -4,6 +4,8 @@
 /public
 /data
 /documentation
+/docker-compose.yaml
+/Dockerfile
 
 # Logs
 logs
